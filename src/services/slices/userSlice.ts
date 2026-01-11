@@ -39,7 +39,9 @@ export const checkUserAuth = createAsyncThunk(
       const response = await getUserApi();
       dispatch(setUser(response.user));
     } catch (error) {
-      console.log(error);
+      console.log('Ошибка авторизации:', error);
+      deleteCookie('accessToken');
+      localStorage.removeItem('refreshToken');
     } finally {
       dispatch(authCheck());
     }
@@ -128,6 +130,12 @@ const userSlice = createSlice({
       })
       .addCase(updateUser.fulfilled, (state, action) => {
         state.user = action.payload;
+      })
+      .addCase(checkUserAuth.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(checkUserAuth.fulfilled, (state) => {
+        state.loading = false;
       });
   }
 });

@@ -3,9 +3,8 @@ import { ingredientsReducer } from './slices/ingredientsSlice';
 import { burgerConstructorReducer } from './slices/burgerConstructorSlice';
 import { orderReducer } from './slices/orderSlice';
 import { userReducer } from './slices/userSlice';
-
-const feedReducer = (state = { orders: [] }) => state;
-const orderHistoryReducer = (state = { orders: [] }) => state;
+import { feedReducer } from './slices/feedSlice';
+import { orderHistoryReducer } from './slices/orderHistorySlice';
 
 export const rootReducer = combineReducers({
   ingredients: ingredientsReducer,

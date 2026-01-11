@@ -5,8 +5,10 @@ import { TTabMode, TIngredient } from '@utils-types';
 import { BurgerIngredientsUI } from '../ui/burger-ingredients';
 
 export const BurgerIngredients: FC = () => {
-  const ingredients = useAppSelector((state) => state.ingredients?.ingredients || []);
-  
+  const ingredients = useAppSelector(
+    (state) => state.ingredients?.ingredients || []
+  );
+
   const buns = ingredients.filter((item: TIngredient) => item.type === 'bun');
   const mains = ingredients.filter((item: TIngredient) => item.type === 'main');
   const sauces = ingredients.filter(
