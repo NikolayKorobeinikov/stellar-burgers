@@ -1,5 +1,7 @@
+import { TFeedState } from '../../../services/slices/feedSlice';
+
 export type FeedInfoUIProps = {
-  feed: any;
+  feed: Pick<TFeedState, 'total' | 'totalToday'>;
   readyOrders: number[];
   pendingOrders: number[];
 };

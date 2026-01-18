@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 type TConstructorIngredient = TIngredient & { id: string };
 
-type TBurgerConstructorState = {
+export type TBurgerConstructorState = {
   bun: TIngredient | null;
   ingredients: TConstructorIngredient[];
 };

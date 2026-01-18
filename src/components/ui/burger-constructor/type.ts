@@ -1,7 +1,8 @@
 import { TOrder } from '@utils-types';
+import { TBurgerConstructorState } from '../../../services/slices/burgerConstructorSlice';
 
 export type BurgerConstructorUIProps = {
-  constructorItems: any;
+  constructorItems: TBurgerConstructorState;
   orderRequest: boolean;
   price: number;
   orderModalData: TOrder | null;

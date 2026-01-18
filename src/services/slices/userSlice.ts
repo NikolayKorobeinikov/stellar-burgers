@@ -136,6 +136,9 @@ const userSlice = createSlice({
       })
       .addCase(checkUserAuth.fulfilled, (state) => {
         state.loading = false;
+      })
+      .addCase(checkUserAuth.rejected, (state) => {
+        state.loading = false;
       });
   }
 });

@@ -36,8 +36,10 @@ export const Profile: FC = () => {
     try {
       await dispatch(updateUser(formValue)).unwrap();
       setFormValue({ ...formValue, password: '' });
-    } catch (err: any) {
-      setError(err.message || 'Ошибка обновления профиля');
+    } catch (err: unknown) {
+      setError(
+        err instanceof Error ? err.message : 'Ошибка обновления профиля'
+      );
     }
   };
 
