@@ -50,6 +50,7 @@ export const OrderCard: FC<OrderCardProps> = memo(({ order }) => {
       orderInfo={orderInfo}
       maxIngredients={maxIngredients}
       locationState={{ background: location }}
+      pathname={location.pathname}
     />
   );
 });
