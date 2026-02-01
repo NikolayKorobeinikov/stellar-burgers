@@ -1,23 +1,51 @@
-import { FC, useMemo } from 'react';
+import { FC, useMemo, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { Preloader } from '../ui/preloader';
 import { OrderInfoUI } from '../ui/order-info';
-import { TIngredient } from '@utils-types';
+import { TIngredient, TOrder } from '@utils-types';
+import { useAppSelector, useAppDispatch } from '../../services/hooks';
+import { getOrderByNumber } from '../../services/slices/orderSlice';
 
 export const OrderInfo: FC = () => {
-  /** TODO: взять переменные orderData и ingredients из стора */
-  const orderData = {
-    createdAt: '',
-    ingredients: [],
-    _id: '',
-    status: '',
-    name: '',
-    updatedAt: 'string',
-    number: 0
-  };
+  const { number } = useParams<{ number: string }>();
+  const dispatch = useAppDispatch();
+  const orderFromState = useAppSelector((state) => state.order.order);
+  const feedOrders = useAppSelector((state) => state.feed.orders);
+  const orderHistoryOrders = useAppSelector(
+    (state) => state.orderHistory.orders
+  );
+  const ingredients = useAppSelector((state) => state.ingredients.ingredients);
+  const loading = useAppSelector((state) => state.order.loading);
 
-  const ingredients: TIngredient[] = [];
+  useEffect(() => {
+    if (number && !orderFromState) {
+      const orderNumber = parseInt(number, 10);
+      const orderFromFeed = feedOrders.find(
+        (order: TOrder) => order.number === orderNumber
+      );
+      const orderFromHistory = orderHistoryOrders.find(
+        (order: TOrder) => order.number === orderNumber
+      );
 
-  /* Готовим данные для отображения */
+      if (!orderFromFeed && !orderFromHistory) {
+        dispatch(getOrderByNumber(orderNumber));
+      }
+    }
+  }, [number, orderFromState, feedOrders, orderHistoryOrders, dispatch]);
+
+  const orderData =
+    orderFromState ||
+    (number
+      ? feedOrders.find(
+          (order: TOrder) => order.number === parseInt(number, 10)
+        )
+      : null) ||
+    (number
+      ? orderHistoryOrders.find(
+          (order: TOrder) => order.number === parseInt(number, 10)
+        )
+      : null);
+
   const orderInfo = useMemo(() => {
     if (!orderData || !ingredients.length) return null;
 
@@ -59,7 +87,7 @@ export const OrderInfo: FC = () => {
     };
   }, [orderData, ingredients]);
 
-  if (!orderInfo) {
+  if (loading || !orderInfo) {
     return <Preloader />;
   }
 
