@@ -10,14 +10,14 @@ export const fetchIngredients = createAsyncThunk(
   }
 );
 
-type TIngredientsState = {
+export type TIngredientsState = {
   ingredients: TIngredient[];
   currentIngredient: TIngredient | null;
   loading: boolean;
   error: string | null;
 };
 
-const initialState: TIngredientsState = {
+export const initialState: TIngredientsState = {
   ingredients: [],
   currentIngredient: null,
   loading: false,

@@ -1,5 +1,6 @@
 import {
   burgerConstructorReducer,
+  initialState,
   addBun,
   addIngredient,
   removeIngredient,
@@ -36,11 +37,6 @@ const mockMain: TIngredient = {
 };
 
 describe('burgerConstructor reducer', () => {
-  const initialState = {
-    bun: null,
-    ingredients: [],
-  };
-
   it('должен возвращать начальное состояние', () => {
     expect(burgerConstructorReducer(undefined, { type: 'unknown' })).toEqual(
       initialState
